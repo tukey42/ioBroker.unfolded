@@ -1,0 +1,59 @@
+{
+    "expert": "yes",
+    "cli": false,
+    "adapterName": "unfolded",
+    "title": "Unfolded Circle Remote 3",
+    "keywords": "",
+    "contributors": "",
+    "icon": {
+        "data": "data:image/png;base64,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",
+        "extension": "png"
+    },
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [],
+    "type": "iot-systems",
+    "startMode": "daemon",
+    "connectionType": "local",
+    "dataSource": "push",
+    "connectionIndicator": "yes",
+    "adapterSettings": [
+        {
+            "key": "host",
+            "label": "IP Address or domain name",
+            "inputType": "text",
+            "defaultValue": ""
+        },
+        {
+            "key": "port",
+            "label": "Port",
+            "inputType": "number",
+            "defaultValue": "80"
+        },
+        {
+            "key": "apikey",
+            "label": "API Key",
+            "inputType": "text",
+            "defaultValue": ""
+        }
+    ],
+    "language": "JavaScript",
+    "nodeVersion": "20",
+    "adminUi": "json",
+    "releaseScript": "yes",
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "tools": [
+        "ESLint",
+        "type checking"
+    ],
+    "authorName": "tukey42",
+    "authorGithub": "tukey42",
+    "authorEmail": "tukey@t-online.de",
+    "gitRemoteProtocol": "HTTPS",
+    "license": "MIT License",
+    "dependabot": "no",
+    "target": "github",
+    "creatorVersion": "2.6.5"
+}

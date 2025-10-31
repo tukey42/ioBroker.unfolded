@@ -1,0 +1,114 @@
+{
+    "common": {
+        "name": "unfolded",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "uk": "Початкова версія",
+                "zh-cn": "首次出版"
+            }
+        },
+        "titleLang": {
+            "en": "Unfolded Circle Remote 3",
+            "de": "Unfolded Circle Remote 3",
+            "ru": "Unfolded Circle Remote 3",
+            "pt": "Unfolded Circle Remote 3",
+            "nl": "Unfolded Circle Remote 3",
+            "fr": "Unfolded Circle Remote 3",
+            "it": "Unfolded Circle Remote 3",
+            "es": "Unfolded Circle Remote 3",
+            "pl": "Unfolded Circle Remote 3",
+            "uk": "Unfolded Circle Remote 3",
+            "zh-cn": "Unfolded Circle Remote 3"
+        },
+        "desc": {
+            "en": "unfolded",
+            "de": "unfolded",
+            "ru": "unfolded",
+            "pt": "unfolded",
+            "nl": "unfolded",
+            "fr": "unfolded",
+            "it": "unfolded",
+            "es": "unfolded",
+            "pl": "unfolded",
+            "uk": "unfolded",
+            "zh-cn": "unfolded"
+        },
+        "authors": [
+            "tukey42 <tukey@t-online.de>"
+        ],
+        "keywords": [
+            "ioBroker",
+            "template",
+            "Smart Home",
+            "home automation"
+        ],
+        "licenseInformation": {
+            "type": "free",
+            "license": "MIT"
+        },
+        "platform": "Javascript/Node.js",
+        "icon": "unfolded.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/tukey42/ioBroker.unfolded/main/admin/unfolded.png",
+        "readme": "https://github.com/tukey42/ioBroker.unfolded/blob/main/README.md",
+        "loglevel": "info",
+        "tier": 3,
+        "mode": "daemon",
+        "type": "iot-systems",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
+        "adminUI": {
+            "config": "json"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=6.0.11"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": "7.0.23"
+            }
+        ]
+    },
+    "native": {
+        "host": "",
+        "port": "80",
+        "apikey": ""
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "host": {
+            "type": "text",
+            "label": "IP Address or domain name",
+            "newLine": true
+        },
+        "port": {
+            "type": "number",
+            "label": "Port",
+            "newLine": true
+        },
+        "apikey": {
+            "type": "text",
+            "label": "API Key",
+            "newLine": true
+        }
+    }
+}
