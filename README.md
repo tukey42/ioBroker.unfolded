@@ -118,3 +118,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Dieses Template erstellt beim Start **einmalig** alle Entities, gruppiert nach ihrem `type`.
+
+- Verwendet die **originalen IDs** der Unfolded Circle Entities (im ioBroker-Objektnamen werden Sonderzeichen ersetzt durch `_`).
+- Legt für jede Entity eine `meta`-State, ggf. `state`, `attributes`-Unterstates sowie eine `actions`-Gruppe mit expliziten, beschreibbaren Action-States an.
+- Schreiben in einen Action-State löst einen **POST** an `/api/v1/entities/<origId>/actions/<action>` aus. Der State wird nur bei Erfolg als `ack: true` gesetzt.
+
+## Anpassungen / ToDos
+- Authentifizierung: Falls dein Remote Auth erfordert, muss axios-Instanz mit Headern/Token ergänzt werden.
+- Schema-Validierung: Optional könnten wir Action-States typisieren (boolean/string/object) basierend auf API-Schema.
+- Fehlerbehandlung: derzeit wird bei Fehlern ein `<state>_error` geschrieben.

@@ -1,0 +1,1142 @@
+{
+	"kind": "resp",
+	"req_id": 0,
+	"msg": "entity_command_metadata",
+	"code": 200,
+	"msg_data": [
+		{
+			"cmd_id": "push",
+			"id": "button.push",
+			"name": {
+				"de": "Betätigen",
+				"en": "Press"
+			}
+		},
+		{
+			"cmd_id": "on",
+			"id": "climate.on",
+			"name": {
+				"de": "Einschalten",
+				"en": "Turn on"
+			}
+		},
+		{
+			"cmd_id": "off",
+			"id": "climate.off",
+			"name": {
+				"de": "Ausschalten",
+				"en": "Turn off"
+			}
+		},
+		{
+			"cmd_id": "hvac_mode",
+			"id": "climate.hvac_mode",
+			"name": {
+				"de": "Geräte Modus",
+				"en": "HVAC mode"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Modus",
+						"en": "Mode"
+					},
+					"param": "hvac_mode",
+					"type": "enum",
+					"values": [
+						"HEAT",
+						"COOL",
+						"HEAT_COOL",
+						"FAN",
+						"AUTO"
+					]
+				}
+			]
+		},
+		{
+			"cmd_id": "target_temperature",
+			"id": "climate.target_temperature_c",
+			"name": {
+				"de": "Ziel Temperatur °C",
+				"en": "Target temperature °C"
+			},
+			"params": [
+				{
+					"default": 21,
+					"max": 30,
+					"min": 10,
+					"name": {
+						"de": "Temperatur",
+						"en": "Temperature"
+					},
+					"param": "temperature",
+					"step": 0.5,
+					"type": "number",
+					"unit": "°C"
+				}
+			]
+		},
+		{
+			"cmd_id": "target_temperature",
+			"id": "climate.target_temperature_f",
+			"name": {
+				"de": "Ziel Temperatur °F",
+				"en": "Target temperature °F"
+			},
+			"params": [
+				{
+					"default": 70,
+					"max": 90,
+					"min": 50,
+					"name": {
+						"de": "Temperatur",
+						"en": "Temperature"
+					},
+					"param": "temperature",
+					"step": 1,
+					"type": "number",
+					"unit": "°F"
+				}
+			]
+		},
+		{
+			"cmd_id": "open",
+			"id": "cover.open",
+			"name": {
+				"de": "Öffnen",
+				"en": "Open"
+			}
+		},
+		{
+			"cmd_id": "close",
+			"id": "cover.close",
+			"name": {
+				"de": "Schliessen",
+				"en": "Close"
+			}
+		},
+		{
+			"cmd_id": "stop",
+			"id": "cover.stop",
+			"name": {
+				"de": "Anhalten",
+				"en": "Stop"
+			}
+		},
+		{
+			"cmd_id": "position",
+			"id": "cover.position",
+			"name": {
+				"de": "Setze Position",
+				"en": "Set position"
+			},
+			"params": [
+				{
+					"max": 100,
+					"min": 0,
+					"name": {
+						"de": "Position",
+						"en": "Position"
+					},
+					"param": "position",
+					"step": 1,
+					"type": "number",
+					"unit": "%"
+				}
+			]
+		},
+		{
+			"cmd_id": "on",
+			"id": "switch.on",
+			"name": {
+				"de": "Einschalten",
+				"en": "Turn on"
+			}
+		},
+		{
+			"cmd_id": "off",
+			"id": "switch.off",
+			"name": {
+				"de": "Ausschalten",
+				"en": "Turn off"
+			}
+		},
+		{
+			"cmd_id": "toggle",
+			"id": "switch.toggle",
+			"name": {
+				"de": "Umschalten",
+				"en": "Toggle"
+			}
+		},
+		{
+			"cmd_id": "on",
+			"id": "light.on",
+			"name": {
+				"de": "Einschalten",
+				"en": "Turn on"
+			}
+		},
+		{
+			"cmd_id": "off",
+			"id": "light.off",
+			"name": {
+				"de": "Ausschalten",
+				"en": "Turn off"
+			}
+		},
+		{
+			"cmd_id": "toggle",
+			"id": "light.toggle",
+			"name": {
+				"de": "Ein- oder ausschalten",
+				"en": "Toggle on or off"
+			}
+		},
+		{
+			"cmd_id": "on",
+			"id": "light.brightness",
+			"name": {
+				"de": "Setze Helligkeit (nativ)",
+				"en": "Set brightness (native)"
+			},
+			"params": [
+				{
+					"max": 255,
+					"min": 0,
+					"name": {
+						"de": "Helligkeit",
+						"en": "brightness"
+					},
+					"param": "brightness",
+					"step": 1,
+					"type": "number"
+				}
+			]
+		},
+		{
+			"cmd_id": "on",
+			"id": "light.brightness_percent",
+			"name": {
+				"de": "Setze Helligkeit in %",
+				"en": "Set brightness in %"
+			},
+			"params": [
+				{
+					"default": 50,
+					"max": 100,
+					"min": 0,
+					"name": {
+						"de": "Helligkeit",
+						"en": "brightness"
+					},
+					"param": "brightness_percent",
+					"step": 1,
+					"type": "number",
+					"unit": "%"
+				}
+			]
+		},
+		{
+			"cmd_id": "on",
+			"id": "light.color_temperature",
+			"name": {
+				"de": "Setze Farbtemperatur",
+				"en": "Set color temperature"
+			},
+			"params": [
+				{
+					"max": 100,
+					"min": 0,
+					"name": {
+						"de": "Farbtemperatur",
+						"en": "Color temperature"
+					},
+					"param": "color_temperature",
+					"step": 1,
+					"type": "number",
+					"unit": "%"
+				}
+			]
+		},
+		{
+			"cmd_id": "on",
+			"id": "light.color",
+			"name": {
+				"de": "Setze Farbe",
+				"en": "Set color"
+			},
+			"params": [
+				{
+					"max": 360,
+					"min": 0,
+					"name": {
+						"de": "Farbton",
+						"en": "Hue"
+					},
+					"param": "hue",
+					"step": 1,
+					"type": "number",
+					"unit": "°"
+				},
+				{
+					"max": 255,
+					"min": 0,
+					"name": {
+						"de": "Farbsättigung",
+						"en": "saturation"
+					},
+					"param": "saturation",
+					"step": 1,
+					"type": "number"
+				}
+			]
+		},
+		{
+			"cmd_id": "run",
+			"id": "macro.run",
+			"name": {
+				"de": "Ausführen",
+				"en": "Run"
+			}
+		},
+		{
+			"cmd_id": "start",
+			"id": "activity.start",
+			"name": {
+				"de": "Starten",
+				"en": "Start"
+			}
+		},
+		{
+			"cmd_id": "on",
+			"id": "activity.on",
+			"name": {
+				"de": "Einschalten",
+				"en": "Switch on"
+			}
+		},
+		{
+			"cmd_id": "off",
+			"id": "activity.off",
+			"name": {
+				"de": "Ausschalten",
+				"en": "Switch off"
+			}
+		},
+		{
+			"cmd_id": "send",
+			"id": "remote.send",
+			"name": {
+				"de": "IR Kommando",
+				"en": "IR command"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Kommando",
+						"en": "Command"
+					},
+					"param": "command",
+					"regex": "^[a-zA-Z0-9\\-_.:+#*°@%\\/()?]{1,50}$",
+					"type": "regex"
+				},
+				{
+					"default": 1,
+					"max": 20,
+					"min": 0,
+					"name": {
+						"de": "Wiederholungen",
+						"en": "Repeats"
+					},
+					"param": "repeat",
+					"type": "number"
+				}
+			]
+		},
+		{
+			"cmd_id": "send_cmd",
+			"id": "remote.send_cmd",
+			"name": {
+				"de": "Kommando senden",
+				"en": "Send command"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Kommando",
+						"en": "Command"
+					},
+					"param": "command",
+					"regex": "^.{1,60}$",
+					"type": "regex"
+				},
+				{
+					"default": 1,
+					"max": 100,
+					"min": 0,
+					"name": {
+						"de": "Wiederholungen",
+						"en": "Repeats"
+					},
+					"param": "repeat",
+					"type": "number"
+				},
+				{
+					"default": 100,
+					"max": 10000,
+					"min": 0,
+					"name": {
+						"de": "Verzögerung",
+						"en": "Delay"
+					},
+					"param": "delay",
+					"step": 20,
+					"type": "number",
+					"unit": "ms"
+				},
+				{
+					"default": 0,
+					"max": 10000,
+					"min": 0,
+					"name": {
+						"de": "Halten",
+						"en": "Hold"
+					},
+					"param": "hold",
+					"step": 200,
+					"type": "number",
+					"unit": "ms"
+				}
+			]
+		},
+		{
+			"cmd_id": "send_key",
+			"id": "remote.send_key",
+			"name": {
+				"de": "Taste senden",
+				"en": "Send key"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Taste",
+						"en": "Key"
+					},
+					"param": "key",
+					"regex": "^(?:\\S|(?:KEY|KEYPAD|CONSUMER|SYSTEM|MOUSE)_[-_A-Z0-9]{1,60})$",
+					"type": "regex"
+				},
+				{
+					"name": {
+						"de": "+ GUI / Meta Taste",
+						"en": "+ GUI / meta key"
+					},
+					"param": "gui",
+					"type": "bool"
+				}
+			]
+		},
+		{
+			"cmd_id": "send",
+			"id": "remote.send_sequence",
+			"name": {
+				"de": "IR Sequenz",
+				"en": "IR sequence"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Kommandos",
+						"en": "Commands"
+					},
+					"param": "sequence",
+					"regex": "^[a-zA-Z0-9\\-_.:+#*°@%\\/()?]{1,50}(?:,[a-zA-Z0-9\\-_.:+#*°@%\\/()?]{1,50})*$",
+					"type": "regex"
+				},
+				{
+					"default": 100,
+					"max": 10000,
+					"min": 0,
+					"name": {
+						"de": "Verzögerung",
+						"en": "Delay"
+					},
+					"param": "delay",
+					"step": 20,
+					"type": "number",
+					"unit": "ms"
+				}
+			]
+		},
+		{
+			"cmd_id": "send_cmd_sequence",
+			"id": "remote.send_cmd_sequence",
+			"name": {
+				"de": "Kommando Sequenz",
+				"en": "Command sequence"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Kommandos",
+						"en": "Commands"
+					},
+					"param": "sequence",
+					"regex": "^.{1,60}(?:[, ].{1,60})*$",
+					"type": "regex"
+				},
+				{
+					"default": 1,
+					"max": 100,
+					"min": 0,
+					"name": {
+						"de": "Wiederholungen",
+						"en": "Repeats"
+					},
+					"param": "repeat",
+					"type": "number"
+				},
+				{
+					"default": 100,
+					"max": 10000,
+					"min": 0,
+					"name": {
+						"de": "Verzögerung",
+						"en": "Delay"
+					},
+					"param": "delay",
+					"step": 20,
+					"type": "number",
+					"unit": "ms"
+				},
+				{
+					"default": 0,
+					"max": 10000,
+					"min": 0,
+					"name": {
+						"de": "Halten",
+						"en": "Hold"
+					},
+					"param": "hold",
+					"step": 200,
+					"type": "number",
+					"unit": "ms"
+				}
+			]
+		},
+		{
+			"cmd_id": "stop_send",
+			"id": "remote.stop_send",
+			"name": {
+				"de": "IR-Wiederholung stoppen",
+				"en": "Stop IR repeat command"
+			}
+		},
+		{
+			"cmd_id": "on",
+			"id": "remote.on",
+			"name": {
+				"de": "Einschalten",
+				"en": "Switch on"
+			}
+		},
+		{
+			"cmd_id": "off",
+			"id": "remote.off",
+			"name": {
+				"de": "Ausschalten",
+				"en": "Switch off"
+			}
+		},
+		{
+			"cmd_id": "toggle",
+			"id": "remote.toggle",
+			"name": {
+				"de": "Ein- oder ausschalten",
+				"en": "Toggle on or off"
+			}
+		},
+		{
+			"cmd_id": "on",
+			"id": "media_player.on",
+			"name": {
+				"de": "Einschalten",
+				"en": "Switch on"
+			}
+		},
+		{
+			"cmd_id": "off",
+			"id": "media_player.off",
+			"name": {
+				"de": "Ausschalten",
+				"en": "Switch off"
+			}
+		},
+		{
+			"cmd_id": "toggle",
+			"id": "media_player.toggle",
+			"name": {
+				"de": "Ein- oder ausschalten",
+				"en": "Toggle on or off"
+			}
+		},
+		{
+			"cmd_id": "play_pause",
+			"id": "media_player.play_pause",
+			"name": {
+				"de": "Abspielen / Pause",
+				"en": "Play / Pause"
+			}
+		},
+		{
+			"cmd_id": "stop",
+			"id": "media_player.stop",
+			"name": {
+				"de": "Stopp",
+				"en": "Stop"
+			}
+		},
+		{
+			"cmd_id": "previous",
+			"id": "media_player.previous",
+			"name": {
+				"de": "Vorher",
+				"en": "Previous"
+			}
+		},
+		{
+			"cmd_id": "next",
+			"id": "media_player.next",
+			"name": {
+				"de": "Weiter",
+				"en": "Next"
+			}
+		},
+		{
+			"cmd_id": "fast_forward",
+			"id": "media_player.fast_forward",
+			"name": {
+				"de": "Vorspulen",
+				"en": "Fast forward"
+			}
+		},
+		{
+			"cmd_id": "rewind",
+			"id": "media_player.rewind",
+			"name": {
+				"de": "Zurückspulen",
+				"en": "Rewind"
+			}
+		},
+		{
+			"cmd_id": "seek",
+			"id": "media_player.seek",
+			"name": {
+				"de": "Positionieren",
+				"en": "Seek"
+			},
+			"params": [
+				{
+					"min": 0,
+					"name": {
+						"de": "Position",
+						"en": "Position"
+					},
+					"param": "media_position",
+					"type": "number"
+				}
+			]
+		},
+		{
+			"cmd_id": "volume",
+			"id": "media_player.volume",
+			"name": {
+				"de": "Lautstärke",
+				"en": "Volume"
+			},
+			"params": [
+				{
+					"default": 20,
+					"max": 100,
+					"min": 0,
+					"name": {
+						"de": "Lautstärke",
+						"en": "Volume"
+					},
+					"param": "volume",
+					"type": "number",
+					"unit": "%"
+				}
+			]
+		},
+		{
+			"cmd_id": "volume_up",
+			"id": "media_player.volume_up",
+			"name": {
+				"de": "Lauter",
+				"en": "Volume up"
+			}
+		},
+		{
+			"cmd_id": "volume_down",
+			"id": "media_player.volume_down",
+			"name": {
+				"de": "Leiser",
+				"en": "Volume down"
+			}
+		},
+		{
+			"cmd_id": "mute_toggle",
+			"id": "media_player.mute_toggle",
+			"name": {
+				"de": "Stummschalten Ein/Aus",
+				"en": "Mute toggle"
+			}
+		},
+		{
+			"cmd_id": "mute",
+			"id": "media_player.mute",
+			"name": {
+				"de": "Stummschalten",
+				"en": "Mute"
+			}
+		},
+		{
+			"cmd_id": "unmute",
+			"id": "media_player.unmute",
+			"name": {
+				"de": "Nicht mehr stummschalten",
+				"en": "Unmute"
+			}
+		},
+		{
+			"cmd_id": "repeat",
+			"id": "media_player.repeat",
+			"name": {
+				"de": "Wiederholen",
+				"en": "Repeat"
+			},
+			"params": [
+				{
+					"default": "OFF",
+					"name": {
+						"de": "Wiederholen",
+						"en": "Repeat"
+					},
+					"param": "repeat",
+					"type": "enum",
+					"values": [
+						"OFF",
+						"ALL",
+						"ONE"
+					]
+				}
+			]
+		},
+		{
+			"cmd_id": "shuffle",
+			"id": "media_player.shuffle",
+			"name": {
+				"de": "Zufallswiedergabe",
+				"en": "Shuffle"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Zufallswiedergabe",
+						"en": "Shuffle"
+					},
+					"param": "shuffle",
+					"type": "bool"
+				}
+			]
+		},
+		{
+			"cmd_id": "channel_up",
+			"id": "media_player.channel_up",
+			"name": {
+				"de": "Kanal +",
+				"en": "Channel up"
+			}
+		},
+		{
+			"cmd_id": "channel_down",
+			"id": "media_player.channel_down",
+			"name": {
+				"de": "Kanal -",
+				"en": "Channel down"
+			}
+		},
+		{
+			"cmd_id": "cursor_up",
+			"id": "media_player.cursor_up",
+			"name": {
+				"de": "Cursor hoch",
+				"en": "Cursor up"
+			}
+		},
+		{
+			"cmd_id": "cursor_down",
+			"id": "media_player.cursor_down",
+			"name": {
+				"de": "Curser runter",
+				"en": "Cursor down"
+			}
+		},
+		{
+			"cmd_id": "cursor_left",
+			"id": "media_player.cursor_left",
+			"name": {
+				"de": "Cursor links",
+				"en": "Cursor left"
+			}
+		},
+		{
+			"cmd_id": "cursor_right",
+			"id": "media_player.cursor_right",
+			"name": {
+				"de": "Cursor rechts",
+				"en": "Cursor right"
+			}
+		},
+		{
+			"cmd_id": "cursor_enter",
+			"id": "media_player.cursor_enter",
+			"name": {
+				"de": "Cursor Eingabe",
+				"en": "Cursor enter"
+			}
+		},
+		{
+			"cmd_id": "digit_0",
+			"id": "media_player.digit_0",
+			"name": {
+				"en": "0"
+			}
+		},
+		{
+			"cmd_id": "digit_1",
+			"id": "media_player.digit_1",
+			"name": {
+				"en": "1"
+			}
+		},
+		{
+			"cmd_id": "digit_2",
+			"id": "media_player.digit_2",
+			"name": {
+				"en": "2"
+			}
+		},
+		{
+			"cmd_id": "digit_3",
+			"id": "media_player.digit_3",
+			"name": {
+				"en": "3"
+			}
+		},
+		{
+			"cmd_id": "digit_4",
+			"id": "media_player.digit_4",
+			"name": {
+				"en": "4"
+			}
+		},
+		{
+			"cmd_id": "digit_5",
+			"id": "media_player.digit_5",
+			"name": {
+				"en": "5"
+			}
+		},
+		{
+			"cmd_id": "digit_6",
+			"id": "media_player.digit_6",
+			"name": {
+				"en": "6"
+			}
+		},
+		{
+			"cmd_id": "digit_7",
+			"id": "media_player.digit_7",
+			"name": {
+				"en": "7"
+			}
+		},
+		{
+			"cmd_id": "digit_8",
+			"id": "media_player.digit_8",
+			"name": {
+				"en": "8"
+			}
+		},
+		{
+			"cmd_id": "digit_9",
+			"id": "media_player.digit_9",
+			"name": {
+				"en": "9"
+			}
+		},
+		{
+			"cmd_id": "function_red",
+			"id": "media_player.function_red",
+			"name": {
+				"de": "Rote Funktion",
+				"en": "Function red"
+			}
+		},
+		{
+			"cmd_id": "function_green",
+			"id": "media_player.function_green",
+			"name": {
+				"de": "Grüne Funktion",
+				"en": "Function green"
+			}
+		},
+		{
+			"cmd_id": "function_yellow",
+			"id": "media_player.function_yellow",
+			"name": {
+				"de": "Gelbe Funktion",
+				"en": "Function yellow"
+			}
+		},
+		{
+			"cmd_id": "function_blue",
+			"id": "media_player.function_blue",
+			"name": {
+				"de": "Blaue Funktion",
+				"en": "Function blue"
+			}
+		},
+		{
+			"cmd_id": "home",
+			"id": "media_player.home",
+			"name": {
+				"de": "Startseite",
+				"en": "Home"
+			}
+		},
+		{
+			"cmd_id": "menu",
+			"id": "media_player.menu",
+			"name": {
+				"de": "Menü",
+				"en": "Menu"
+			}
+		},
+		{
+			"cmd_id": "context_menu",
+			"id": "media_player.context_menu",
+			"name": {
+				"de": "Kontextmenü",
+				"en": "Context menu"
+			}
+		},
+		{
+			"cmd_id": "guide",
+			"id": "media_player.guide",
+			"name": {
+				"de": "Programmführer",
+				"en": "Guide"
+			}
+		},
+		{
+			"cmd_id": "info",
+			"id": "media_player.info",
+			"name": {
+				"de": "Info",
+				"en": "Info"
+			}
+		},
+		{
+			"cmd_id": "back",
+			"id": "media_player.back",
+			"name": {
+				"de": "Zurück",
+				"en": "Back"
+			}
+		},
+		{
+			"cmd_id": "select_source",
+			"id": "media_player.select_source",
+			"name": {
+				"de": "Eingang oder Quelle",
+				"en": "Input source"
+			},
+			"params": [
+				{
+					"items": {
+						"field": "source_list",
+						"source": "attributes"
+					},
+					"name": {
+						"de": "Quelle",
+						"en": "Source"
+					},
+					"param": "source",
+					"type": "selection"
+				}
+			]
+		},
+		{
+			"cmd_id": "select_sound_mode",
+			"id": "media_player.select_sound_mode",
+			"name": {
+				"de": "Klangmodus",
+				"en": "Sound mode"
+			},
+			"params": [
+				{
+					"items": {
+						"field": "sound_mode_list",
+						"source": "attributes"
+					},
+					"name": {
+						"de": "Modus",
+						"en": "Mode"
+					},
+					"param": "mode",
+					"type": "selection"
+				}
+			]
+		},
+		{
+			"cmd_id": "eject",
+			"id": "media_player.eject",
+			"name": {
+				"de": "Auswerfen",
+				"en": "Eject"
+			}
+		},
+		{
+			"cmd_id": "open_close",
+			"id": "media_player.open_close",
+			"name": {
+				"de": "Öffnen / Schließen",
+				"de_CH": "Öffnen / Schliessen",
+				"en": "Open / close"
+			}
+		},
+		{
+			"cmd_id": "audio_track",
+			"id": "media_player.audio_track",
+			"name": {
+				"de": "Tonspur",
+				"en": "Audio track"
+			}
+		},
+		{
+			"cmd_id": "subtitle",
+			"id": "media_player.subtitle",
+			"name": {
+				"de": "Untertitel",
+				"en": "Subtitle"
+			}
+		},
+		{
+			"cmd_id": "record",
+			"id": "media_player.record",
+			"name": {
+				"de": "Aufnehmen",
+				"en": "Record"
+			}
+		},
+		{
+			"cmd_id": "my_recordings",
+			"id": "media_player.my_recordings",
+			"name": {
+				"de": "Meine Aufnahmen",
+				"en": "My recordings"
+			}
+		},
+		{
+			"cmd_id": "live",
+			"id": "media_player.live",
+			"name": {
+				"de": "Live",
+				"en": "Live"
+			}
+		},
+		{
+			"cmd_id": "settings",
+			"id": "media_player.settings",
+			"name": {
+				"de": "Einstellungen",
+				"en": "Settings"
+			}
+		},
+		{
+			"cmd_id": "send_ir",
+			"id": "ir_emitter.send_ir",
+			"name": {
+				"de": "IR Code senden",
+				"en": "Send IR code"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Code",
+						"en": "Code"
+					},
+					"param": "code",
+					"regex": "^(?:\\d{1,3};0x[a-fA-F0-9]{1,16};\\d{1,2};\\d{1,2}|0{1,4}(?:[, ][a-fA-F0-9]{1,4}){5,})$",
+					"type": "regex"
+				},
+				{
+					"default": "PRONTO",
+					"name": {
+						"de": "Format",
+						"en": "Format"
+					},
+					"param": "format",
+					"type": "enum",
+					"values": [
+						"PRONTO",
+						"HEX"
+					]
+				},
+				{
+					"name": {
+						"de": "Anschluss",
+						"en": "Port"
+					},
+					"param": "port_id",
+					"regex": "^.{0,30}$",
+					"type": "regex"
+				},
+				{
+					"default": 1,
+					"max": 20,
+					"min": 0,
+					"name": {
+						"de": "Wiederholungen",
+						"en": "Repeats"
+					},
+					"param": "repeat",
+					"type": "number"
+				}
+			]
+		},
+		{
+			"cmd_id": "stop_ir",
+			"id": "ir_emitter.stop_ir",
+			"name": {
+				"de": "IR Code stoppen",
+				"en": "Stop IR code"
+			},
+			"params": [
+				{
+					"name": {
+						"de": "Anschluss",
+						"en": "Port"
+					},
+					"param": "port_id",
+					"regex": "^.{0,30}$",
+					"type": "regex"
+				}
+			]
+		}
+	]
+}

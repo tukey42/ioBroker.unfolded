@@ -6,158 +6,248 @@
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils = require('@iobroker/adapter-core');
 
-// Load your modules here, e.g.:
-// const fs = require("fs");
+/*
+ * ioBroker Adapter für Unfolded Circle Remote 3 (WebSocket API)
+ * Features:
+ *  - WebSocket-Verbindung zur Remote Core API
+ *  - Live-Status aller Activities (is_active)
+ *  - Möglichkeit, Activities direkt per WebSocket zu starten
+ */
+
+const utils = require("@iobroker/adapter-core");
+const WebSocket = require("ws");
 
 class Unfolded extends utils.Adapter {
-
-    /**
-     * @param {Partial<utils.AdapterOptions>} [options={}]
-     */
-    constructor(options) {
+    constructor(options = {}) {
         super({
             ...options,
-            name: 'unfolded',
+            name: "unfolded",
         });
-        this.on('ready', this.onReady.bind(this));
-        this.on('stateChange', this.onStateChange.bind(this));
-        // this.on('objectChange', this.onObjectChange.bind(this));
-        // this.on('message', this.onMessage.bind(this));
-        this.on('unload', this.onUnload.bind(this));
+
+        this.ws = null;
+        this.reconnectTimeout = null;
+        this.connected = false;
+
+        this.on("ready", this.onReady.bind(this));
+        this.on("stateChange", this.onStateChange.bind(this));
+        this.on("unload", this.onUnload.bind(this));
+    }
+
+    async onReady() {
+        const host = this.config.host;
+        const port = this.config.port || 80;
+        const token = this.config.apikey;
+
+        if (!host || host.trim() === "") {
+            this.log.error("Missing host in configuration. Please set it in the adapter settings.");
+            return; // Stop initialization
+        }
+
+        if (!token || token.trim() === "") {
+            this.log.error("Missing API key in configuration. Please set it in the adapter settings.");
+            return; // Stop initialization
+        }
+
+        const wsUrl = `ws://${host}:${port}/ws`;
+
+        this.log.info(`Verbinde mit Unfolded Circle Remote 3 WebSocket: ${wsUrl}`);
+
+        await this.connectWebSocket(wsUrl, token);
     }
 
     /**
-     * Is called when databases are connected and adapter received configuration.
+     * @param {string} url
+     * @param {string} token
      */
-    async onReady() {
-        // Initialize your adapter here
+    async connectWebSocket(url, token) {
+        if (this.ws) {
+            this.ws.close();
+        }
 
-        // Reset the connection indicator during startup
-        this.setState('info.connection', false, true);
+        const headers = token ? { "API-KEY": `${token}` } : {};
+        this.ws = new WebSocket(url, { headers });
 
-        // The adapters config (in the instance object everything under the attribute "native") is accessible via
-        // this.config:
-        this.log.info('config host: ' + this.config.host);
-        this.log.info('config port: ' + this.config.port);
-        this.log.info('config apikey: ' + this.config.apikey);
+        this.ws.on("open", () => {
+            this.connected = true;
+            this.setState("info.connection", true, true);
+            this.log.info("WebSocket verbunden mit Remote 3.");
 
-        /*
-        For every state in the system there has to be also an object of type state
-        Here a simple template for a boolean variable named "testVariable"
-        Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-        */
-        await this.setObjectNotExistsAsync('testVariable', {
-            type: 'state',
+            // Nach Verbindung: Activities abonnieren
+            this.subscribeActivities();
+            this.requestAllActivities();
+        });
+
+        this.ws.on("message", (data) => {
+            try {
+                const msg = JSON.parse(data.toString());
+                this.handleMessage(msg);
+            } catch (err) {
+                this.log.warn(`Fehler beim Parsen von WS-Nachricht: ${err.message}`);
+            }
+        });
+
+        this.ws.on("close", () => {
+            this.connected = false;
+            this.setState("info.connection", false, true);
+            this.log.warn("WebSocket getrennt. Reconnect in 5s ...");
+            if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
+            this.reconnectTimeout = setTimeout(
+                () => this.connectWebSocket(url, token),
+                5000
+            );
+        });
+
+        this.ws.on("error", (err) => {
+            this.log.error(`WebSocket-Fehler: ${err.message}`);
+        });
+    }
+
+    // Abonniere die Liste & Updates aller Activities
+    subscribeActivities() {
+        const msg = {
+            kind: "req",
+            id: 0,
+            msg: "subscribe_events",
+            msg_data: {
+                channels: [ "entity_activity" ]
+            }
+        };
+        this.log.info("Subscribe alle Activities auf der Remote 3  ...");
+        this.ws.send(JSON.stringify(msg));
+    }
+
+
+    // WebSocket-Kommando: Alle Activities anfordern
+    requestAllActivities() {
+        const msg = {
+            kind: "req",
+            id: 0,
+            msg: "get_entities",
+            msg_data: {
+                filter: { entity_types: [ "activity" ] }
+            }
+        };
+        this.log.info("Fordere alle Activities von der Remote 3 an ...");
+        this.ws.send(JSON.stringify(msg));
+    }
+
+    // Eingehende WS-Nachrichten verarbeiten
+    async handleMessage(msg) {
+        this.log.silly(`Empfangene WS-Nachricht: ${JSON.stringify(msg)}`);
+        this.log.debug(`Empfangene WS-Nachricht: ${msg.msg}`);
+        if (msg && msg.msg_data) {
+            if (msg.kind === "resp" && msg.code === 200) {
+                // Initiale Liste aller Aktivitäten
+                if (msg.msg === "entities" && msg.msg_data.entities && Array.isArray(msg.msg_data.entities)) {
+                    for (const act of msg.msg_data.entities) {
+                        await this.createOrUpdateActivity(act);
+                    }
+                }
+            }
+
+            if (msg.kind === "event") {
+                // Status-Update einer Aktivität
+                if (msg.msg === "entity_change" && msg.cat === "ENTITY" && msg.msg_data && msg.msg_data.entity_type === "activity" 
+                        && msg.msg_data.event_type === "CHANGE" && msg.msg_data.new_state) {
+                    const act = msg.msg_data;
+                    const id = act.entity_id.split(".")[2];
+                    const nstate = act.new_state.attributes.state;
+                    const isActive = nstate === "ON";
+                    if (nstate === "ON" || nstate === "OFF") {
+                        this.log.info(`Aktivität-Status geändert: ${id} => is_active=${isActive}`);
+                        await this.setStateAsync(`activities.${id}.is_active`, isActive, true);
+                    }
+                }
+            }
+        }
+    }
+
+    // Hilfsfunktion: legt Activity-Objekte in ioBroker an
+    async createOrUpdateActivity(act) {
+        const id = act.entity_id.split(".")[2];
+        const name = act.name.de_DE || act.name.en_US || id;
+
+        this.extendObject(`activities.${id}`, {
+            type: "channel",
+            common: { name },
+            native: {},
+        });
+
+        this.extendObject(`activities.${id}.is_active`, {
+            type: "state",
             common: {
-                name: 'testVariable',
-                type: 'boolean',
-                role: 'indicator',
+                name: "Activity aktiv?",
+                type: "boolean",
+                role: "indicator",
                 read: true,
+                write: false,
+            },
+            native: {},
+        });
+        this.setState(`activities.${id}.is_active`, act.attributes.state != "OFF", true);
+        this.subscribeStates(`activities.${id}.start`);
+
+        this.extendObject(`activities.${id}.start`, {
+            type: "state",
+            common: {
+                name: "Starte diese Aktivität",
+                type: "boolean",
+                role: "button",
+                read: false,
                 write: true,
             },
             native: {},
         });
-
-        // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-        this.subscribeStates('testVariable');
-        // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-        // this.subscribeStates('lights.*');
-        // Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-        // this.subscribeStates('*');
-
-        /*
-            setState examples
-            you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-        */
-        // the variable testVariable is set to true as command (ack=false)
-        await this.setStateAsync('testVariable', true);
-
-        // same thing, but the value is flagged "ack"
-        // ack should be always set to true if the value is received from or acknowledged from the target system
-        await this.setStateAsync('testVariable', { val: true, ack: true });
-
-        // same thing, but the state is deleted after 30s (getState will return null afterwards)
-        await this.setStateAsync('testVariable', { val: true, ack: true, expire: 30 });
-
-        // examples for the checkPassword/checkGroup functions
-        let result = await this.checkPasswordAsync('admin', 'iobroker');
-        this.log.info('check user admin pw iobroker: ' + result);
-
-        result = await this.checkGroupAsync('admin', 'admin');
-        this.log.info('check group user admin group admin: ' + result);
     }
 
-    /**
-     * Is called when adapter shuts down - callback has to be called under any circumstances!
-     * @param {() => void} callback
-     */
+    // Wenn ioBroker-User eine Aktivität starten möchte
+    async onStateChange(id, state) {
+        this.log.debug(`StateChange: ${id} => ${JSON.stringify(state)}`);
+        if (!state || state.ack) return;
+
+        const parts = id.split(".");
+        const actId = parts[parts.length - 2];
+        const command = parts[parts.length - 1];
+
+        if (command === "start" && state.val === true && this.connected) {
+            this.log.info(`Starte Aktivität über WebSocket: ${actId}`);
+
+            const msg = {
+                kind: "req",
+                id: 0,
+                msg: "execute_entity_command",
+
+                msg_data: {
+                    entity_id: `uc.main.${actId}`,
+                    cmd_id: "activity.start"
+                }
+            };
+
+            try {
+                this.ws.send(JSON.stringify(msg));
+                this.log.info(`Startbefehl für '${actId}' gesendet.`);
+            } catch (err) {
+                this.log.error(`Fehler beim Senden von Startbefehl: ${err.message}`);
+            }
+
+            // Reset des Buttons nach kurzer Zeit
+            setTimeout(() => this.setState(id, false, true), 500);
+        }
+    }
+
     onUnload(callback) {
         try {
-            // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
-            // clearInterval(interval1);
-
+            if (this.ws) this.ws.close();
+            clearTimeout(this.reconnectTimeout);
             callback();
-        } catch (e) {
+        } catch {
             callback();
         }
     }
-
-    // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-    // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-    // /**
-    //  * Is called if a subscribed object changes
-    //  * @param {string} id
-    //  * @param {ioBroker.Object | null | undefined} obj
-    //  */
-    // onObjectChange(id, obj) {
-    //     if (obj) {
-    //         // The object was changed
-    //         this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-    //     } else {
-    //         // The object was deleted
-    //         this.log.info(`object ${id} deleted`);
-    //     }
-    // }
-
-    /**
-     * Is called if a subscribed state changes
-     * @param {string} id
-     * @param {ioBroker.State | null | undefined} state
-     */
-    onStateChange(id, state) {
-        if (state) {
-            // The state was changed
-            this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
-        } else {
-            // The state was deleted
-            this.log.info(`state ${id} deleted`);
-        }
-    }
-
-    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-    // /**
-    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-    //  * @param {ioBroker.Message} obj
-    //  */
-    // onMessage(obj) {
-    //     if (typeof obj === 'object' && obj.message) {
-    //         if (obj.command === 'send') {
-    //             // e.g. send email or pushover or whatever
-    //             this.log.info('send command');
-
-    //             // Send response in callback if required
-    //             if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-    //         }
-    //     }
-    // }
-
 }
+
+
 
 if (require.main !== module) {
     // Export the constructor in compact mode

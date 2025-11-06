@@ -31,17 +31,17 @@
             "zh-cn": "Unfolded Circle Remote 3"
         },
         "desc": {
-            "en": "unfolded",
-            "de": "unfolded",
-            "ru": "unfolded",
-            "pt": "unfolded",
-            "nl": "unfolded",
-            "fr": "unfolded",
-            "it": "unfolded",
-            "es": "unfolded",
-            "pl": "unfolded",
-            "uk": "unfolded",
-            "zh-cn": "unfolded"
+            "en": "ioBroker adapter for Unfolded Circle Remote 3",
+            "de": "ioBroker adapter for Unfolded Circle Remote 3",
+            "ru": "ioBroker adapter for Unfolded Circle Remote 3",
+            "pt": "ioBroker adapter for Unfolded Circle Remote 3",
+            "nl": "ioBroker adapter for Unfolded Circle Remote 3",
+            "fr": "ioBroker adapter for Unfolded Circle Remote 3",
+            "it": "ioBroker adapter for Unfolded Circle Remote 3",
+            "es": "ioBroker adapter for Unfolded Circle Remote 3",
+            "pl": "ioBroker adapter for Unfolded Circle Remote 3",
+            "uk": "ioBroker adapter for Unfolded Circle Remote 3",
+            "zh-cn": "ioBroker adapter for Unfolded Circle Remote 3"
         },
         "authors": [
             "tukey42 <tukey@t-online.de>"
