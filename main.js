@@ -168,13 +168,13 @@ class Unfolded extends utils.Adapter {
         const id = act.entity_id.split(".")[2];
         const name = act.name.de_DE || act.name.en_US || id;
 
-        this.extendObject(`activities.${id}`, {
+        await this.setObjectNotExistsAsync(`activities.${id}`, {
             type: "channel",
             common: { name },
             native: {},
         });
 
-        this.extendObject(`activities.${id}.is_active`, {
+        await this.setObjectNotExistsAsync(`activities.${id}.is_active`, {
             type: "state",
             common: {
                 name: "Activity aktiv?",
@@ -186,9 +186,7 @@ class Unfolded extends utils.Adapter {
             native: {},
         });
         this.setState(`activities.${id}.is_active`, act.attributes.state != "OFF", true);
-        this.subscribeStates(`activities.${id}.start`);
-
-        this.extendObject(`activities.${id}.start`, {
+        await this.setObjectNotExistsAsync(`activities.${id}.start`, {
             type: "state",
             common: {
                 name: "Starte diese Aktivität",
@@ -199,6 +197,7 @@ class Unfolded extends utils.Adapter {
             },
             native: {},
         });
+        this.subscribeStates(`activities.${id}.start`);
     }
 
     // Wenn ioBroker-User eine Aktivität starten möchte

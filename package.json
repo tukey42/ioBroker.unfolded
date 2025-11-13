@@ -1,6 +1,6 @@
 {
   "name": "iobroker.unfolded",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ioBroker adapter for Unfolded Circle Remote 3",
   "author": {
     "name": "tukey42",
