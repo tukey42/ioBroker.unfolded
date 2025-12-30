@@ -28,6 +28,7 @@ class Unfolded extends utils.Adapter {
         this.ws = null;
         this.reconnectTimeout = null;
         this.connected = false;
+        this.ping = null;
 
         this.on("ready", this.onReady.bind(this));
         this.on("stateChange", this.onStateChange.bind(this));
@@ -76,6 +77,11 @@ class Unfolded extends utils.Adapter {
             // Nach Verbindung: Activities abonnieren
             this.subscribeActivities();
             this.requestAllActivities();
+            this.ping = setInterval(() => {
+                if (this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.ping();
+                }
+            }, 45000);
         });
 
         this.ws.on("message", (data) => {
@@ -90,12 +96,20 @@ class Unfolded extends utils.Adapter {
         this.ws.on("close", () => {
             this.connected = false;
             this.setState("info.connection", false, true);
+            if (this.ping) {
+                clearInterval(this.ping);
+                this.ping = null;
+            }
             this.log.warn("WebSocket getrennt. Reconnect in 5s ...");
             if (this.reconnectTimeout) clearTimeout(this.reconnectTimeout);
             this.reconnectTimeout = setTimeout(
                 () => this.connectWebSocket(url, token),
                 5000
             );
+        });
+
+        this.ws.on("pong", () => {
+            this.log.debug("pong received");
         });
 
         this.ws.on("error", (err) => {
